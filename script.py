@@ -25,9 +25,8 @@
 
 # pandas
 # numpy 
-# matplotlib
-# plotly
 # statsmodel
+# matplotlib
 
 import pandas as pd
 import numpy as np 
@@ -37,7 +36,7 @@ from statsmodels.tsa.stattools import acf, pacf
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 import matplotlib.pylab as plt 
 from matplotlib.pylab import rcParams
-
+rcParams['figure.figsize'] = 15, 6
 
 ##
 ####
@@ -47,15 +46,15 @@ from matplotlib.pylab import rcParams
 ####
 ##
 # 
-# 
+
 
 
 # Recall that in order for the terminal to output txt write 
 # python script.py > output.txt
 
-dateparse = lambda dates: pd.datetime.strptime(dates, '%Y-%m')
-data = pd.read_csv('sp_500_ts.csv', parse_dates='Date', index_col='Date', date_parser=dateparse)
-print data.head()
+#dateparse = lambda dates: pd.datetime.strptime(dates, '%Y-%m')
+# dataMaster = pd.read_csv('sp_500_ts.csv', parse_dates='Date', index_col='Date', date_parser=dateparse)
+dataMaster = pd.read_csv('sp_500_ts.csv', skipinitialspace=True)
 
 
 ##
@@ -66,9 +65,9 @@ print data.head()
 ####
 ##
 
-sp_500 = data['sp_500'] 
-
-print sp_500
+sp_500 = dataMaster['sp_500'] 
+print "This is the time series object"
+print dataMaster.dtypes
 
 ##
 ####
@@ -82,7 +81,7 @@ print sp_500
 # Plotting the time series object 
 plt.plot(sp_500)
 plt.title('Time Series Plot of S&P 500')
-plt.savefig("timeSeries.png", format = 'png')
+plt.savefig("images/timeSeries.png", format = 'png')
 plt.close()
 
 # Plotting the time series object after being differenced
@@ -93,30 +92,26 @@ print diff
 
 plt.plot(diff)
 plt.title('First Difference Time Series Plot')
-plt.savefig("timeSeriesDiff.png", format = 'png')
+plt.savefig("images/timeSeriesDiff.png", format = 'png')
 plt.close()
 
 
 
 
-# We grab the acf and pacf for the time series with plot_acf and plot_pacf
-# NOTE: Since I am in th process of getting acquainted I know that plot_acf outputs 'fig'
-# this means I can run the same functionalities as plt!! 
+# Respective ACF and PACF plots for time series
 acf = plot_acf(sp_500, lags = 20)
-acf.savefig("timeSeriesACF.png", format = 'png')
-
-
+acf.savefig("images/timeSeriesACF.png", format = 'png')
 
 pacf = plot_pacf(sp_500, lags = 20)
-pacf.savefig("timeSeriesPACFDiff.png", format = 'png')
+pacf.savefig("images/timeSeriesPACF.png", format = 'png')
 
 
+# Respective ACF and PACF plots for first difference of time series
 acfDiff = plot_acf(diff, lags = 20)
-acfDiff.savefig("timeSeriesACFDiff.png", format = 'png')
-
+acfDiff.savefig("images/timeSeriesACFDiff.png", format = 'png')
 
 pacfDiff = plot_pacf(diff, lags = 20)
-pacfDiff.savefig("timeSeriesPACFDiff.png", format = 'png')
+pacfDiff.savefig("images/timeSeriesPACFDiff.png", format = 'png') 
 
 
 ##
@@ -128,14 +123,21 @@ pacfDiff.savefig("timeSeriesPACFDiff.png", format = 'png')
 ##
 
 model = ARIMA(sp_500, order = (0, 1, 1))
+# Note: don't know how to include drift as the model including drift had better
+# model accuracy 
 fit = model.fit(disp=-1)
 
 fit = pd.Series(fit.fittedvalues, copy = True)
 fit= fit.cumsum()
 fit = fit
 
+plt.figure()
 plt.plot(sp_500)
 plt.plot(fit)
 plt.title('Fitted Vs. Actual Values for ')
-plt.savefig("realVPred.png", format = 'png')
+plt.savefig ("images/realVPred.png", format = 'png')
 plt.close()
+
+# Next process is predicting a year ahead using our model 
+# res = fit.forecast(steps = 12)
+# res.savefig("forecastedPredictions.png", format = 'png')
