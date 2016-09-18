@@ -31,10 +31,12 @@
 import pandas as pd
 import numpy as np 
 import statsmodels.api as sm  
-from statsmodels.tsa.arima_model import ARIMA
+from statsmodels.tsa.arima_model import ARIMA, ARIMAResults
 from statsmodels.tsa.stattools import acf, pacf
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 import matplotlib.pylab as plt 
+import csv
+import matplotlib.dates as dates
 from matplotlib.pylab import rcParams
 rcParams['figure.figsize'] = 15, 6
 
@@ -51,10 +53,18 @@ rcParams['figure.figsize'] = 15, 6
 
 # Recall that in order for the terminal to output txt write 
 # python script.py > output.txt
-
-#dateparse = lambda dates: pd.datetime.strptime(dates, '%Y-%m')
-# dataMaster = pd.read_csv('sp_500_ts.csv', parse_dates='Date', index_col='Date', date_parser=dateparse)
-dataMaster = pd.read_csv('sp_500_ts.csv', skipinitialspace=True)
+dataMaster = pd.read_csv('ts.csv')
+sp_500 =  dataMaster['sp_500']
+print "Here's our Original CSV file!"
+print sp_500.head(12)
+# Set the variable data as a date time object
+ran = pd.date_range('1995-01', '2016-1', freq = 'M')
+ts = pd.Series(dataMaster['sp_500'].values, index = ran)
+print "This is the TS object!"
+print ts.head(12)
+print ts.dtypes
+print "Output for our dataformat"
+print ran
 
 
 ##
@@ -65,9 +75,11 @@ dataMaster = pd.read_csv('sp_500_ts.csv', skipinitialspace=True)
 ####
 ##
 
-sp_500 = dataMaster['sp_500'] 
-print "This is the time series object"
-print dataMaster.dtypes
+
+# Testing to see if the object is a time series object!
+print "Here is the year 2014"
+print ts['2014']
+
 
 ##
 ####
@@ -79,16 +91,29 @@ print dataMaster.dtypes
 
 
 # Plotting the time series object 
-plt.plot(sp_500)
+plt.plot(ts)
 plt.title('Time Series Plot of S&P 500')
 plt.savefig("images/timeSeries.png", format = 'png')
 plt.close()
 
+
+plt.plot(ts)
+plt.title('Time Series Plot of S&P 500')
+plt.savefig("images/timeSeries1.png", format = 'png')
+plt.close()
+
+# Plotting Seasonal Decomposition 
+#res = sm.tsa.seasonal_decompose(sp_500)
+#des = res.plot()
+#des.savefig("images/seasonalDecomp.png", format = 'png')
+#des.close()
+
+
 # Plotting the time series object after being differenced
-sp500_diff = sp_500 - sp_500.shift()
+sp500_diff = ts - ts.shift()
 diff = sp500_diff.dropna()
-print
-print diff
+print "Here is our differenced time series"
+print diff.head(12)
 
 plt.plot(diff)
 plt.title('First Difference Time Series Plot')
@@ -99,10 +124,10 @@ plt.close()
 
 
 # Respective ACF and PACF plots for time series
-acf = plot_acf(sp_500, lags = 20)
+acf = plot_acf(ts, lags = 20)
 acf.savefig("images/timeSeriesACF.png", format = 'png')
 
-pacf = plot_pacf(sp_500, lags = 20)
+pacf = plot_pacf(ts, lags = 20)
 pacf.savefig("images/timeSeriesPACF.png", format = 'png')
 
 
@@ -122,22 +147,30 @@ pacfDiff.savefig("images/timeSeriesPACFDiff.png", format = 'png')
 ####
 ##
 
-model = ARIMA(sp_500, order = (0, 1, 1))
+mod = ARIMA(ts, order = (0, 1, 1), freq = 'M')
+
+print "Our model summary"
+results = mod.fit()
+print results.summary()
+print "Our predicted Values using predict on our ARIMA model!"
+print results.predict(239, 251)
+predVals = results.predict(239, 251, typ='levels')
+print "Here are our predicted values!!!!!"
+print predVals
+# predVals = predVals.cumsum()
+# print predVals
 # Note: don't know how to include drift as the model including drift had better
 # model accuracy 
-fit = model.fit(disp=-1)
 
-fit = pd.Series(fit.fittedvalues, copy = True)
-fit= fit.cumsum()
-fit = fit
+concan = pd.concat([ts, predVals], axis = 1, keys=['original', 'predicted'])
+print "The data frame including the predicted values using ARIMA!"
+print concan['2015']
+ax = concan.plot()
+fig = ax.get_figure()
+fig.savefig('images/predVAct.png')
 
-plt.figure()
-plt.plot(sp_500)
-plt.plot(fit)
-plt.title('Fitted Vs. Actual Values for ')
-plt.savefig ("images/realVPred.png", format = 'png')
-plt.close()
 
-# Next process is predicting a year ahead using our model 
-# res = fit.forecast(steps = 12)
-# res.savefig("forecastedPredictions.png", format = 'png')
+ax1 = concan.plot()
+ax1.axis(['2014', '2016', 1800, 2200])
+fig1 = ax1.get_figure()
+fig1.savefig('images/predVActZoom.png')
