@@ -96,12 +96,6 @@ plt.title('Time Series Plot of S&P 500')
 plt.savefig("images/timeSeries.png", format = 'png')
 plt.close()
 
-
-plt.plot(ts)
-plt.title('Time Series Plot of S&P 500')
-plt.savefig("images/timeSeries1.png", format = 'png')
-plt.close()
-
 # Plotting Seasonal Decomposition 
 #res = sm.tsa.seasonal_decompose(sp_500)
 #des = res.plot()
