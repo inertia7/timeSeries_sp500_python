@@ -34,7 +34,9 @@ import statsmodels.api as sm
 from statsmodels.tsa.arima_model import ARIMA, ARIMAResults
 from statsmodels.tsa.stattools import acf, pacf
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+#from statsmodels.tsa.seasonal import seasonal_decompose
 import matplotlib.pylab as plt 
+import csv
 import matplotlib.dates as dates
 from matplotlib.pylab import rcParams
 rcParams['figure.figsize'] = 15, 6
@@ -52,7 +54,7 @@ rcParams['figure.figsize'] = 15, 6
 
 # Recall that in order for the terminal to output txt write 
 # python script.py > output.txt
-dataMaster = pd.read_csv('sp_500_ts.csv')
+dataMaster = pd.read_csv('ts.csv')
 sp_500 =  dataMaster['sp_500']
 print "Here's our Original CSV file!"
 print sp_500.head(12)
@@ -78,8 +80,9 @@ print ran
 # Testing to see if the object is a time series object!
 print "Here is the year 2014"
 print ts['2014']
-
-
+print "This is the interval from 1995 to 2014:"
+sp500_TR = ts['1995':'2014']
+print sp500_TR
 ##
 ####
 ######
@@ -96,10 +99,10 @@ plt.savefig("images/timeSeries.png", format = 'png')
 plt.close()
 
 # Plotting Seasonal Decomposition 
-#res = sm.tsa.seasonal_decompose(sp_500)
-#des = res.plot()
-#des.savefig("images/seasonalDecomp.png", format = 'png')
-#des.close()
+# res = seasonal_decompose(sp_500)
+# des = res.plot()
+# des.savefig("images/seasonalDecomp.png", format = 'png')
+# des.close()
 
 
 # Plotting the time series object after being differenced
@@ -140,14 +143,17 @@ pacfDiff.savefig("images/timeSeriesPACFDiff.png", format = 'png')
 ####
 ##
 
-mod = ARIMA(ts, order = (0, 1, 1), freq = 'M')
+mod = ARIMA(sp500_TR, order = (0, 1, 1), freq = 'M')
 
 print "Our model summary"
 results = mod.fit()
 print results.summary()
 print "Our predicted Values using predict on our ARIMA model!"
-print results.predict(239, 251)
+print results.predict(239, 251, typ='levels')
 predVals = results.predict(239, 251, typ='levels')
+# I dropped Dec 31, 2014 since I wasn't trying to predict this value and kept getting
+# an error if I changed the indice as 240, 251!
+predVals = predVals.drop(predVals.index[0])
 print "Here are our predicted values!!!!!"
 print predVals
 # predVals = predVals.cumsum()
@@ -157,7 +163,7 @@ print predVals
 
 concan = pd.concat([ts, predVals], axis = 1, keys=['original', 'predicted'])
 print "The data frame including the predicted values using ARIMA!"
-print concan['2015']
+print concan['2014':'2015']
 ax = concan.plot()
 fig = ax.get_figure()
 fig.savefig('images/predVAct.png')
