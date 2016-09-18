@@ -35,7 +35,6 @@ from statsmodels.tsa.arima_model import ARIMA, ARIMAResults
 from statsmodels.tsa.stattools import acf, pacf
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 import matplotlib.pylab as plt 
-import csv
 import matplotlib.dates as dates
 from matplotlib.pylab import rcParams
 rcParams['figure.figsize'] = 15, 6
@@ -53,7 +52,7 @@ rcParams['figure.figsize'] = 15, 6
 
 # Recall that in order for the terminal to output txt write 
 # python script.py > output.txt
-dataMaster = pd.read_csv('ts.csv')
+dataMaster = pd.read_csv('sp_500_ts.csv')
 sp_500 =  dataMaster['sp_500']
 print "Here's our Original CSV file!"
 print sp_500.head(12)
