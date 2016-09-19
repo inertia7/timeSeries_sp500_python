@@ -161,6 +161,7 @@ print predVals
 # Note: don't know how to include drift as the model including drift had better
 # model accuracy 
 
+# Here we plot the actual 2015 values vs the predicted values!
 concan = pd.concat([ts, predVals], axis = 1, keys=['original', 'predicted'])
 print "The data frame including the predicted values using ARIMA!"
 print concan['2014':'2015']
@@ -168,8 +169,13 @@ ax = concan.plot()
 fig = ax.get_figure()
 fig.savefig('images/predVAct.png')
 
-
+# Now we just zoom in to get a better picture
 ax1 = concan.plot()
 ax1.axis(['2014', '2016', 1800, 2200])
 fig1 = ax1.get_figure()
 fig1.savefig('images/predVActZoom.png')
+# Last remarks: Couldn't find any documentation regarding adding 95% CI which I assume I will have to calculate manually. 
+# Seasonal Decompostion doesn't seem to work. 
+# There might be issues with when the dates are assigned i.e. for python I have dates as 1/31 etc while I am not 100% sure if this is an issue. 
+# I can not some visual differences between R and python even though the predicted values are the same!
+
