@@ -6,7 +6,7 @@
 #######
 #######
 ####### Time Series Model for S&P 500
-#######
+####### Compiled by Raul Eulogio
 #######
 #######
 #######
@@ -54,7 +54,8 @@ rcParams['figure.figsize'] = 15, 6
 
 # Recall that in order for the terminal to output txt write 
 # python script.py > output.txt
-dataMaster = pd.read_csv('ts.csv')
+# Also important recall to create a folder called 'images' for the plots to save in the correct directory!
+dataMaster = pd.read_csv('sp_500_ts.csv')
 sp_500 =  dataMaster['sp_500']
 print "Here's our Original CSV file!"
 print sp_500.head(12)
@@ -95,7 +96,7 @@ print sp500_TR
 # Plotting the time series object 
 plt.plot(ts)
 plt.title('Time Series Plot of S&P 500')
-plt.savefig("images/timeSeries.png", format = 'png')
+plt.savefig("images/timeSeries.png", format = 'png') 
 plt.close()
 
 # Plotting Seasonal Decomposition 
