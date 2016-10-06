@@ -1,1 +1,1 @@
-# timeSeries_sp500_python
+# Time Series Analysis of Major Stock Indices using Python
