@@ -62,6 +62,7 @@ We won't go into detail since there is already a plethora of online resources ou
 
 ## ARIMA Model 
 (**NOTE**: We copy pasted most of the README from the [timeSeries_sp500_R](https://github.com/inertia7/timeSeries_sp500_R/blob/master/README.md) since they are similar projects but just in different languages.)
+
 For this project we will be using the **Autoregressive Integrated Moving Average** model and its variations to forecast the S&P 500. For each component we have a corresponding variable for which we model if there is sign of these components. Here we roughly outline the parts that make an **ARIMA(p,d,q)** model 
 - **Autoregressive [AR(p)]** - a stochastic process where future values are dependent on past values signifying that past values have a linear effect on the future values.
 - **Integration [I(d)]** - when differencing is done to make a process stationary, we include the differenced value(i.e. if we took the first difference it would be I(d=1))
