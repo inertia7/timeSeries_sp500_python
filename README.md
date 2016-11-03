@@ -2,6 +2,11 @@
 ## Time-Series Analysis of the S&P 500 Stock Index with **Python**
 (Project can be found at: http://www.inertia7.com/projects/time-series-stock-market-python)
 
+## Table of Contents
+
+* [Abstract](#Abstract)
+* [Contributors](#Contributors)
+
 ## Abstract
 This project focuses on deriving the best statistical-learning model to predict future values for the **S&P 500 Stock Index** with **Python**.
 
