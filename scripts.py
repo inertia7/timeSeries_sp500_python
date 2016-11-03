@@ -11,8 +11,6 @@ from statsmodels.tsa.arima_model import ARIMA, ARIMAResults
 from statsmodels.tsa.stattools import acf, pacf
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 import matplotlib.pylab as plt
-import plotly.plotly as py
-import plotly.tools as tls
 import matplotlib.dates as dates
 from matplotlib.pylab import rcParams
 
