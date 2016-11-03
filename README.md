@@ -4,10 +4,10 @@
 
 ## Table of Contents
 
-* [Abstract](## Abstract)
+* [Abstract](#Abstract)
 * [Contributors](## Contributors)
 
-## Abstract
+## <a name="Abstract"></a>Abstract
 This project focuses on deriving the best statistical-learning model to predict future values for the **S&P 500 Stock Index** with **Python**.
 
 Understanding the **S&P 500 Stock Index** is highly-relevant in understanding the health of the U.S. economy as it is highly-correlated (statistically) with other U.S. economic indicators such as other stock indices (e.g. the NASDAQ Stock Index and the NYSE Stock Exchange), the U.S. Housing Price Index, and the U.S. Gross Domestic Product (U.S. GDP).
@@ -18,7 +18,7 @@ For this project we leverage the horse-power of Python and deliver, where approp
 
 It is important to note that time series analysis in **Python** is still developing so this project is not as extensive as the **R** project, but we hope to provide sufficient resources to enable you to start a time series project in **Python**
 
-## Contributors
+## <a name="Contributors"></a>Contributors
 - Raul Eulogio
 - David A. Campos
 - Vincent La
