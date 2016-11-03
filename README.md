@@ -4,8 +4,8 @@
 
 ## Table of Contents
 
-* [Abstract](#Abstract)
-* [Contributors](#Contributors)
+* [Abstract](## Abstract)
+* [Contributors](## Contributors)
 
 ## Abstract
 This project focuses on deriving the best statistical-learning model to predict future values for the **S&P 500 Stock Index** with **Python**.
