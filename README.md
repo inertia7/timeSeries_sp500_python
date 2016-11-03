@@ -10,6 +10,7 @@
 * [Steps Required](#Steps-Required)
 * [Methodology](#Methodology)
 * [ARIMA Model](#ARIMA-Model)
+* [Conclusions](#Conclusions)
 
 ## <a name="Abstract"></a>Abstract
 This project focuses on deriving the best statistical-learning model to predict future values for the **S&P 500 Stock Index** with **Python**.
@@ -90,4 +91,7 @@ We won't go into too much detail since we outlined the process in the project, b
 ### Forecast
 We forecasted using the **ARIMA(0,1,1)** model, but the biggest difference is that we did not include drift in this iteration because we did not any documentation that said this was readily available through the **statsmodels** module. 
 
+## <a name="Conclusions"></a> Conclusions
 We would like to state this project is iterative so we will be expanding to include more features that were on the **R** project. 
+
+Since time series analysis in **Python** is a growing field we will be expanding as we learn the processes so be on the look out for updates on this project!
