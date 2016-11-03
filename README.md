@@ -6,6 +6,10 @@
 
 * [Abstract](#Abstract)
 * [Contributors](#Contributors)
+* [Modules Required](#Modules-Required)
+* [Steps Required](#Steps-Required)
+* [Methodology](#Methodology)
+* [ARIMA Model](#ARIMA-Model)
 
 ## <a name="Abstract"></a>Abstract
 This project focuses on deriving the best statistical-learning model to predict future values for the **S&P 500 Stock Index** with **Python**.
@@ -23,7 +27,7 @@ It is important to note that time series analysis in **Python** is still develop
 - David A. Campos
 - Vincent La
 
-## Modules Required 
+## <a name="Modules-Required"></a>Modules Required 
 Here we included the modules needed to ensure the script runs smoothly:
 
 	- pandas
@@ -43,7 +47,7 @@ The biggest difference that we would like to note, if you are swithcing over fro
 
 We wanted to note this because as novice **Python** users this was an issue we faced so we want to help with the process of transitioning from one language to another. 
 
-## Steps Required
+## <a name="Steps-Required"></a>Steps Required
 
 ### Creating working directory
 Before running the script we recommend creating  directory for your project if you have not done so, this will facilitate that our script will run smoothly as well as saving images correctly since we used the `savefig` function from **matplotlib**. Creating the parent directory along with the images subdirectory will prove to be useful in the long run for any projects you fork/reproduce from **GitHub** or any other online resource! 
@@ -54,7 +58,7 @@ For **Linux** and **mac** users, the following command wil create the appropriat
 
 For this example, we put the project in the myProject directory, but you can put the project where ever you feel appropriate. 
 
-# Methodology 
+## <a name="Methodology"></a>Methodology 
 For our time series analysis, we chose to focus on the [Box-Jenkins](https://en.wikipedia.org/wiki/Box%E2%80%93Jenkins#Box-Jenkins_model_identification) methodology which incorporates a series of steps to ensure we  produce the best model to forecasting. We used the years 1995 to 2014, withholding 2015 so that we can compare the forecast.
 
 But before we outline the steps we would like to outline some  necessary assumptions for univariate time series analysis:
@@ -65,8 +69,8 @@ But before we outline the steps we would like to outline some  necessary assumpt
 
 We won't go into detail since there is already a plethora of online resources outlining these assumptions, but we did feel that it was important to state these assumptions.
 
-## ARIMA Model 
-(**NOTE**: We copy pasted most of the README from the [timeSeries_sp500_R](https://github.com/inertia7/timeSeries_sp500_R/blob/master/README.md) since they are similar projects but just in different languages.)
+## <a name="ARIMA-Model"></a>ARIMA Model 
+(**NOTE**: We copy pasted most of the **README** from the [timeSeries_sp500_R](https://github.com/inertia7/timeSeries_sp500_R/blob/master/README.md) since they are similar projects but just in different languages.)
 
 For this project we will be using the **Autoregressive Integrated Moving Average** model and its variations to forecast the S&P 500. For each component we have a corresponding variable for which we model if there is sign of these components. Here we roughly outline the parts that make an **ARIMA(p,d,q)** model 
 - **Autoregressive [AR(p)]** - a stochastic process where future values are dependent on past values signifying that past values have a linear effect on the future values.
@@ -75,15 +79,15 @@ For this project we will be using the **Autoregressive Integrated Moving Average
 
 Next we outline the steps to ensure we fit the appropriate **ARIMA(p,d,q)** model!
 
-## Stationary process and Seasonality
+### Stationary process and Seasonality
 The first step is checking to see if the time series object is stationary, this can be done in various methods which can also be explained as exploratory analysis since we are in essence "getting a feel" for our data.
 
-## Autocorrelation and Partial Autocorrelation Plots
+### Autocorrelation and Partial Autocorrelation Plots
 These plots play a crucial role in time series analysis, because we can estimate our **ARIMA(p,d,q)** model based on the behaviour of these plots or justify the need to do an appropriate transformation.  
 
 We won't go into too much detail since we outlined the process in the project, but through the use of our ACF and PACF plots for our original time series we were able to make the deduction to take the first difference of our time series. Once we did that we saw that the ACF and PACF plot showed characteristics of a MA(1) model, but since we took the first difference it becomes a mixed model; **ARIMA(0, 1, 1)**
 
-## Forecast
+### Forecast
 We forecasted using the **ARIMA(0,1,1)** model, but the biggest difference is that we did not include drift in this iteration because we did not any documentation that said this was readily available through the **statsmodels** module. 
 
 We would like to state this project is iterative so we will be expanding to include more features that were on the **R** project. 
